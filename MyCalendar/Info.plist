@@ -41,5 +41,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSRemindersUsageDescription</key>
+	<string>Allow MyCalendar to access your Reminders?</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Allow MyCalendar to access your Calendars?</string>
 </dict>
 </plist>

@@ -13,6 +13,12 @@
 		C80CCD511F5F4E1C005A3E1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C80CCD4F1F5F4E1C005A3E1A /* Main.storyboard */; };
 		C80CCD531F5F4E1C005A3E1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C80CCD521F5F4E1C005A3E1A /* Assets.xcassets */; };
 		C80CCD561F5F4E1C005A3E1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C80CCD541F5F4E1C005A3E1A /* LaunchScreen.storyboard */; };
+		C80CCD641F5F577B005A3E1A /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD631F5F577B005A3E1A /* MyButton.swift */; };
+		C80CCD661F5F5B71005A3E1A /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD651F5F5B71005A3E1A /* Colors.swift */; };
+		C80CCD6C1F5F5FD7005A3E1A /* CalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD681F5F5FD6005A3E1A /* CalViewController.swift */; };
+		C80CCD6D1F5F5FD7005A3E1A /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD691F5F5FD6005A3E1A /* CustomCell.swift */; };
+		C80CCD6E1F5F5FD7005A3E1A /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD6A1F5F5FD7005A3E1A /* HeaderView.swift */; };
+		C80CCD6F1F5F5FD7005A3E1A /* UIViewFades.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD6B1F5F5FD7005A3E1A /* UIViewFades.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +31,12 @@
 		C80CCD521F5F4E1C005A3E1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C80CCD551F5F4E1C005A3E1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C80CCD571F5F4E1C005A3E1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C80CCD631F5F577B005A3E1A /* MyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
+		C80CCD651F5F5B71005A3E1A /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		C80CCD681F5F5FD6005A3E1A /* CalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalViewController.swift; sourceTree = "<group>"; };
+		C80CCD691F5F5FD6005A3E1A /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		C80CCD6A1F5F5FD7005A3E1A /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		C80CCD6B1F5F5FD7005A3E1A /* UIViewFades.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewFades.swift; sourceTree = "<group>"; };
 		FC215CA3F69169C478B55EA0 /* Pods-MyCalendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCalendar.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyCalendar/Pods-MyCalendar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,14 +82,28 @@
 		C80CCD4A1F5F4E1B005A3E1A /* MyCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				C80CCD681F5F5FD6005A3E1A /* CalViewController.swift */,
+				C80CCD691F5F5FD6005A3E1A /* CustomCell.swift */,
+				C80CCD6A1F5F5FD7005A3E1A /* HeaderView.swift */,
 				C80CCD4B1F5F4E1B005A3E1A /* AppDelegate.swift */,
 				C80CCD4D1F5F4E1C005A3E1A /* ViewController.swift */,
 				C80CCD4F1F5F4E1C005A3E1A /* Main.storyboard */,
 				C80CCD521F5F4E1C005A3E1A /* Assets.xcassets */,
 				C80CCD541F5F4E1C005A3E1A /* LaunchScreen.storyboard */,
 				C80CCD571F5F4E1C005A3E1A /* Info.plist */,
+				C80CCD671F5F5C0C005A3E1A /* Style */,
 			);
 			path = MyCalendar;
+			sourceTree = "<group>";
+		};
+		C80CCD671F5F5C0C005A3E1A /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				C80CCD6B1F5F5FD7005A3E1A /* UIViewFades.swift */,
+				C80CCD631F5F577B005A3E1A /* MyButton.swift */,
+				C80CCD651F5F5B71005A3E1A /* Colors.swift */,
+			);
+			name = Style;
 			sourceTree = "<group>";
 		};
 		D0F7393CED87D1EE645EE536 /* Frameworks */ = {
@@ -213,7 +239,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C80CCD4E1F5F4E1C005A3E1A /* ViewController.swift in Sources */,
+				C80CCD6C1F5F5FD7005A3E1A /* CalViewController.swift in Sources */,
+				C80CCD6F1F5F5FD7005A3E1A /* UIViewFades.swift in Sources */,
+				C80CCD661F5F5B71005A3E1A /* Colors.swift in Sources */,
 				C80CCD4C1F5F4E1B005A3E1A /* AppDelegate.swift in Sources */,
+				C80CCD6D1F5F5FD7005A3E1A /* CustomCell.swift in Sources */,
+				C80CCD641F5F577B005A3E1A /* MyButton.swift in Sources */,
+				C80CCD6E1F5F5FD7005A3E1A /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +413,7 @@
 				C80CCD5C1F5F4E1C005A3E1A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
