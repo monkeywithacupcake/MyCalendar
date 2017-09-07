@@ -94,19 +94,19 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="34"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YEAR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2v-YT-C1e">
-                                                <rect key="frame" x="0.0" y="0.0" width="94" height="34"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="78.5" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="752" text="MONTH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Acw-mU-ckR">
-                                                <rect key="frame" x="104" y="0.0" width="156.5" height="34"/>
+                                                <rect key="frame" x="88.5" y="0.0" width="131.5" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBv-Fe-tiv" customClass="MyButton" customModule="MyCalendar" customModuleProvider="target">
-                                                <rect key="frame" x="270.5" y="0.0" width="104.5" height="34"/>
+                                                <rect key="frame" x="230" y="0.0" width="74.5" height="34"/>
                                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Today">
@@ -119,6 +119,16 @@
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="todayTapped:" destination="CX2-4e-fsU" eventType="touchUpInside" id="aIi-h5-l0g"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPh-Fo-o00">
+                                                <rect key="frame" x="314.5" y="0.0" width="60.5" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="+">
+                                                    <color key="titleColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addEventTapped:" destination="CX2-4e-fsU" eventType="touchUpInside" id="QJc-mh-ABk"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -310,7 +320,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EO1-HS-mxw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977" y="691"/>
+            <point key="canvasLocation" x="1031" y="37"/>
         </scene>
     </scenes>
 </document>

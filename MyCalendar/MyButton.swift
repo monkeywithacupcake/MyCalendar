@@ -38,7 +38,7 @@ class MyButton: UIButton {
         // deal with the text - button calls this "Title"
         self.setTitleColor(color, for: .normal)
         self.setTitleColor(disabledColor, for: .disabled)
-        self.titleLabel?.font = UIFont(name: "Arial", size: 24)
+        //self.titleLabel?.font = UIFont(name: "Arial", size: 24)
         self.titleLabel?.adjustsFontSizeToFitWidth = true
         self.setTitle(self.titleLabel?.text?.capitalized, for: .normal)
         

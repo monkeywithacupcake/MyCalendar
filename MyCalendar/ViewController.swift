@@ -19,11 +19,13 @@ class ViewController: UIViewController {
 
     var events: [EKEvent]?      // set by loadevents
     var calendar: EKCalendar!   // should be set to calendar w/ title Calendar
+    var eventStore: EKEventStore! // set on view did load
 
     @IBOutlet weak var askPermissionsView: UIView!
     // MARK: - LifeCycle
     override func viewDidLoad() {
         self.view.backgroundColor = vryltorange
+        eventStore = EKEventStore()
     }
 
     // MARK: - Button Actions
@@ -93,7 +95,6 @@ class ViewController: UIViewController {
         let endDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())
 
         if let endDate = endDate {
-            let eventStore = EKEventStore()
 
             let eventsPredicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
 
@@ -114,13 +115,16 @@ class ViewController: UIViewController {
 
         if segue.identifier == "showCalendarSegue"{
             let targetVC = segue.destination as! CalViewController
-            targetVC.calendar = calendar
-            targetVC.events = events
+
             if events == nil{
                 print("no events")
                 loadEvents(calendar: calendar)
                 targetVC.events = events
             }
+            targetVC.eventStore = eventStore
+            targetVC.calendar = calendar
+            targetVC.events = events
+
         }
 
         else {

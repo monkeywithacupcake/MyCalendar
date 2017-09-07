@@ -8,13 +8,16 @@
 
 import UIKit
 import EventKit
+import EventKitUI
 import JTAppleCalendar
 
-class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource, UITableViewDelegate, UITableViewDataSource,
+    EKEventEditViewDelegate{
 
     // MARK: - Properties
-    var calendar: EKCalendar! // set by segue
-    var events: [EKEvent]? // set by segue and updated with loadevents
+    var eventStore: EKEventStore!   // set by segue
+    var calendar: EKCalendar!       // set by segue
+    var events: [EKEvent]?          // set by segue and updated with loadevents
     var datesWithEvents: [Date]?
     let todaysDate = Date()
     var eventsToShow : [String: [EKEvent]] = [:] // date: events
@@ -38,7 +41,7 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        //loadEvents()
+
     }
 
     override func viewDidLoad() {
@@ -53,12 +56,9 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         dayTable.delegate = self
         dayTable.dataSource = self
 
-
-        //loadEvents()
-        //print("Load Events in calviewcontroller")
         print(events ?? "no events")
 
-        setupCalendarView() // just spacing
+       // setupCalendarView() // just spacing
 
         calCollectionView.visibleDates { dateSegment in
             self.setDateSegment(dateSegment : dateSegment)
@@ -87,9 +87,16 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         calCollectionView.selectDates([Date()])
     }
 
-
-
-    
+    @IBAction func addEventTapped(_ sender: UIButton) {
+        // create an instance of EKEventEditViewController()
+        let targetVC = EKEventEditViewController()
+        // make it pretty
+        targetVC.view.backgroundColor = vryltorange
+        // give it some data
+        targetVC.eventStore = self.eventStore
+        targetVC.editViewDelegate = self
+        self.present(targetVC, animated: true, completion: nil)
+    }
 
     // MARK: - Event Methods
 
@@ -99,7 +106,6 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         let endDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())
 
         if let endDate = endDate {
-            let eventStore = EKEventStore()
 
             let eventsPredicate = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
 
@@ -222,6 +228,14 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     }
 
 
+    func loadUpCalendar(){
+        self.loadEvents()
+        self.setupCalendarView()
+        self.calCollectionView.reloadData()
+        self.eventswTitles = getEventsTitles(events: events)
+        self.dayTable.reloadData()
+    }
+
 
     // MARK: - JTAppleCalendar Methods
 
@@ -295,8 +309,33 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         return cell
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // create an instance of EKEventEditViewController()
+        let targetVC = EKEventEditViewController()
+        // make it pretty
+        targetVC.view.backgroundColor = vryltorange
+        // give it some data
+        targetVC.eventStore = self.eventStore
+        let selectedIndexPath = dayTable.indexPathForSelectedRow!
+        targetVC.event = events?[(selectedIndexPath as NSIndexPath).row]
+        targetVC.editViewDelegate = self
+        self.present(targetVC, animated: true, completion: nil)
+    }
 
-    
+
+    // MARK: - EKEventEditViewDelegate Methods
+    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+
+        dismiss(animated: true, completion: nil)
+
+        self.loadUpCalendar()
+
+
+    }
+
+    // MARK: - Navigation Functions
+
+
 
 } // end of CalViewController
 
