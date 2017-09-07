@@ -58,7 +58,7 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
 
         print(events ?? "no events")
 
-       // setupCalendarView() // just spacing
+        setupCalendarView() // just spacing
 
         calCollectionView.visibleDates { dateSegment in
             self.setDateSegment(dateSegment : dateSegment)
@@ -304,8 +304,11 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell")!
-        cell.textLabel?.text = eventsInDay[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell")! as! DayTableViewCell
+        cell.startTimeLabel.text = "11:00"
+        cell.stopTimeLabel.text = "15:00"
+        cell.eventTitlelabel.text = eventsInDay[indexPath.row]
+        //cell.textLabel?.text = eventsInDay[indexPath.row]
         return cell
     }
 
