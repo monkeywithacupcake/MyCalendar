@@ -18,13 +18,9 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     var eventStore: EKEventStore!   // set by segue
     var calendar: EKCalendar!       // set by segue
     var events: [EKEvent]?          // set by segue and updated with loadevents
-    var datesWithEvents: [Date]?
     let todaysDate = Date()
     var thisDayAgenda = [AgendaItem]() // id (event.row), type, event
-    var thisDayEvents: [Int: EKEvent] = [:] // event.row : event
     var eventsOnDay : [String: Int] = [:] // date: count events
-    var eventsToShow : [String: [EKEvent]] = [:] // date: events
-    var eventswTitles : [String: [String]] = [:]
     var eventsInDay: [String] = ["Free - No Events"] // for table
 
     @IBOutlet weak var yearLabel: UILabel!
@@ -73,10 +69,6 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         }
 
         eventsOnDay = getDayActivity(events: events)
-        //eventsToShow = getEventsToShow(events: events)
-        //print(eventsToShow.keys)
-        eventswTitles = getEventsTitles(events: events)
-        //print(eventswTitles)
 
 
         self.calCollectionView.reloadData()
@@ -128,36 +120,9 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         }
     }
 
-    func getEventsToShow(events: [EKEvent]?) -> [String: [EKEvent]]{
-        if events != nil{
-            formatter.dateFormat = "yyyy MM dd"
-            var dict = [String: [EKEvent]]()
-            for event in events!{
-                let edate = formatter.string(from: event.startDate)
-                if dict[edate] != nil {
-                    // there is already an event on this date
-                    dict[edate]! += [event]
-                } else {
-                    dict[edate] = [event]
-                }
-            }
-            return dict
-        } else {
-            return [:]
-        }
-    }
 
-    func prepareEventTable(dateString: String) -> [String] {
-        print("looking up \(dateString)")
-        var daysList = [String]()
-        if eventswTitles[dateString] != nil{
-            daysList = eventswTitles[dateString]!
-        } else {
-            daysList = ["Free - No Events"]
-        }
-        print(daysList)
-        return daysList
-    }
+
+
 
     func getEventsTitles(events: [EKEvent]?) -> [String: [String]]{
         if events != nil{
@@ -281,11 +246,8 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     func loadUpCalendar(){
         self.loadEvents()
         eventsOnDay = getDayActivity(events: events)
-        //eventsToShow = getEventsToShow(events: events)
-        //eventsToShow = getEventsToShow(events: events)
         self.setupCalendarView()
         self.calCollectionView.reloadData()
-        self.eventswTitles = getEventsTitles(events: events)
         self.dayTable.reloadData()
     }
 
@@ -317,16 +279,9 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let cell = cell as? CustomCell else {return}
         configureCell(cell: cell, state: cellState)
+
         // prepare the view below the calendar
-        formatter.dateFormat = "yyyy MM dd"
-
-        // testing code to see if can find events
         thisDayAgenda = getDayAgenda(date: cellState.date, events: events)
-
-
-        // code that works now to show
-        eventsInDay = prepareEventTable(dateString: formatter.string(from: cellState.date))
-        print("found eventsInDay: \(eventsInDay)")
         let makelabel = "\(String(describing: cellState.day).capitalized) \(cellState.text)"
         setupLabel(info: makelabel)
         dayTable.reloadData()
@@ -366,18 +321,11 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell")! as! DayTableViewCell
         formatter.dateFormat = "HH:mm" // just time!
-        var start = ""
-        var end = ""
-        if thisDayAgenda[indexPath.row].event.startDate != nil {
-           start = formatter.string(from: (thisDayAgenda[indexPath.row].event.startDate))
-        }
-        if thisDayAgenda[indexPath.row].event.endDate != nil {
-            end = formatter.string(from: (thisDayAgenda[indexPath.row].event.endDate))
-        }
+        let start = formatter.string(from: (thisDayAgenda[indexPath.row].event.startDate))
+        let end = formatter.string(from: (thisDayAgenda[indexPath.row].event.endDate))
         cell.startTimeLabel.text = start
         cell.stopTimeLabel.text = end
-        cell.eventTitlelabel.text = thisDayAgenda[indexPath.row].event.title//eventsInDay[indexPath.row]
-        //cell.textLabel?.text = eventsInDay[indexPath.row]
+        cell.eventTitlelabel.text = thisDayAgenda[indexPath.row].event.title
         return cell
     }
 
@@ -385,7 +333,8 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         // create an instance of EKEventEditViewController()
         let targetVC = EKEventEditViewController()
         // make it pretty
-        targetVC.view.backgroundColor = vryltorange
+        
+        targetVC.navigationBar.tintColor = brightorange
         // give it some data
         targetVC.eventStore = self.eventStore
         let selectedIndexPath = thisDayAgenda[indexPath.row].id
