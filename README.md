@@ -12,10 +12,13 @@ MyCalendar has the following functions/features:
   + include a scrolling horizontal monthly calendar
   + include a today button to return to today
   + highlight (with a dot) days with events
+  + include a + button to add a new event
 + shows an agenda view for each day with a list of events
+  + agenda items can be edited by clicking on the event
+  + agenda items show the title, start time, and stop time.
 
 TODO
-+ show more details in agenda
++ show a changing image based on the event
 + allow user to add/edit agenda events from the calendar view by clicking on a button 
 
 ## Compatibility
