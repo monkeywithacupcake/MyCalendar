@@ -20,6 +20,7 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     var events: [EKEvent]?          // set by segue and updated with loadevents
     var datesWithEvents: [Date]?
     let todaysDate = Date()
+    var eventsOnDay : [String: Int] = [:] // date: count events
     var eventsToShow : [String: [EKEvent]] = [:] // date: events
     var eventswTitles : [String: [String]] = [:]
     var eventsInDay: [String] = ["Free - No Events"] // for table
@@ -63,10 +64,13 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         calCollectionView.visibleDates { dateSegment in
             self.setDateSegment(dateSegment : dateSegment)
         }
-        eventsToShow = getEventsToShow(events: events)
-        print(eventsToShow.keys)
+
+        eventsOnDay = getDayActivity(events: events)
+        //eventsToShow = getEventsToShow(events: events)
+        //print(eventsToShow.keys)
         eventswTitles = getEventsTitles(events: events)
-        print(eventswTitles)
+        //print(eventswTitles)
+
 
         self.calCollectionView.reloadData()
 
@@ -166,6 +170,23 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
             return [:]
         }
     }
+    func getDayActivity(events: [EKEvent]?) -> [String: Int]{
+        if events != nil{
+            formatter.dateFormat = "yyyy MM dd"
+            var dict = [String: Int]()
+            for event in events!{
+                let edate = formatter.string(from: event.startDate)
+                dict[edate] = (dict[edate] ?? 0) + 1
+            }
+            for (key, value) in dict {
+                print("\(key) has \(value) event(s)")
+            }
+            return dict
+
+        } else {
+            return [:]
+        }
+    }
 
     // MARK: - Calendar View Methods
 
@@ -213,7 +234,7 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
 
     func handleCellEvents(cell: CustomCell, state: CellState){
         formatter.dateFormat = "yyyy MM dd"
-        cell.activeLine.isHidden = !eventsToShow.contains{$0.key == formatter.string(from: state.date)} ? true : false
+        cell.activeLine.isHidden = !eventsOnDay.contains{$0.key == formatter.string(from: state.date)} ? true : false
     }
 
 
@@ -230,6 +251,9 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
 
     func loadUpCalendar(){
         self.loadEvents()
+        eventsOnDay = getDayActivity(events: events)
+        //eventsToShow = getEventsToShow(events: events)
+        //eventsToShow = getEventsToShow(events: events)
         self.setupCalendarView()
         self.calCollectionView.reloadData()
         self.eventswTitles = getEventsTitles(events: events)
