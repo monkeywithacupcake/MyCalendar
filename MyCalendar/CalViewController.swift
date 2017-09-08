@@ -20,6 +20,8 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     var events: [EKEvent]?          // set by segue and updated with loadevents
     var datesWithEvents: [Date]?
     let todaysDate = Date()
+    var thisDayAgenda = [AgendaItem]() // id (event.row), type, event
+    var thisDayEvents: [Int: EKEvent] = [:] // event.row : event
     var eventsOnDay : [String: Int] = [:] // date: count events
     var eventsToShow : [String: [EKEvent]] = [:] // date: events
     var eventswTitles : [String: [String]] = [:]
@@ -57,7 +59,12 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         dayTable.delegate = self
         dayTable.dataSource = self
 
-        print(events ?? "no events")
+        //print(events ?? "no events")
+        print("Hey, I'm printing an event")
+        print(events?[0])
+        for event in events!{
+            print(event.startDate)
+        }
 
         setupCalendarView() // just spacing
 
@@ -188,6 +195,27 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         }
     }
 
+    func getDayAgenda(date: Date, events: [EKEvent]?) -> [AgendaItem]{
+        if events != nil{
+            formatter.dateFormat = "yyyy MM dd"
+            let today = formatter.string(from: date)
+            //var dict = [Int: EKEvent]()
+            var agenda = [AgendaItem]()
+            for event in events!{
+                let edate = formatter.string(from: event.startDate)
+                if edate == today {
+                    agenda.append( AgendaItem(
+                        id: events!.index(of: event)!,
+                        type: "fun", event: event)
+                    )
+                }
+            }
+            return agenda
+        } else {
+            return []
+        }
+    }
+
     // MARK: - Calendar View Methods
 
     func setDateSegment(dateSegment: DateSegmentInfo){
@@ -241,6 +269,7 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     func setupCalendarView(){
         calCollectionView.minimumLineSpacing = 0
         calCollectionView.minimumInteritemSpacing = 0
+        testLabel.text = "" // make it blank
     }
 
 
@@ -290,9 +319,15 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         configureCell(cell: cell, state: cellState)
         // prepare the view below the calendar
         formatter.dateFormat = "yyyy MM dd"
+
+        // testing code to see if can find events
+        thisDayAgenda = getDayAgenda(date: cellState.date, events: events)
+
+
+        // code that works now to show
         eventsInDay = prepareEventTable(dateString: formatter.string(from: cellState.date))
         print("found eventsInDay: \(eventsInDay)")
-        let makelabel = "\(eventsInDay.count) Event(s) on \(String(describing: cellState.day).capitalized) \(cellState.text)"
+        let makelabel = "\(String(describing: cellState.day).capitalized) \(cellState.text)"
         setupLabel(info: makelabel)
         dayTable.reloadData()
     }
@@ -323,15 +358,25 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Trying to show: \(eventsInDay.count) items")
-        return eventsInDay.count
+        print("Trying to show: \(thisDayAgenda.count) items")
+        return thisDayAgenda.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell")! as! DayTableViewCell
-        cell.startTimeLabel.text = "11:00"
-        cell.stopTimeLabel.text = "15:00"
-        cell.eventTitlelabel.text = eventsInDay[indexPath.row]
+        formatter.dateFormat = "HH:mm" // just time!
+        var start = ""
+        var end = ""
+        if thisDayAgenda[indexPath.row].event.startDate != nil {
+           start = formatter.string(from: (thisDayAgenda[indexPath.row].event.startDate))
+        }
+        if thisDayAgenda[indexPath.row].event.endDate != nil {
+            end = formatter.string(from: (thisDayAgenda[indexPath.row].event.endDate))
+        }
+        cell.startTimeLabel.text = start
+        cell.stopTimeLabel.text = end
+        cell.eventTitlelabel.text = thisDayAgenda[indexPath.row].event.title//eventsInDay[indexPath.row]
         //cell.textLabel?.text = eventsInDay[indexPath.row]
         return cell
     }
@@ -343,8 +388,8 @@ class CalViewController: UIViewController, JTAppleCalendarViewDelegate, JTAppleC
         targetVC.view.backgroundColor = vryltorange
         // give it some data
         targetVC.eventStore = self.eventStore
-        let selectedIndexPath = dayTable.indexPathForSelectedRow!
-        targetVC.event = events?[(selectedIndexPath as NSIndexPath).row]
+        let selectedIndexPath = thisDayAgenda[indexPath.row].id
+        targetVC.event = events?[selectedIndexPath]
         targetVC.editViewDelegate = self
         self.present(targetVC, animated: true, completion: nil)
     }

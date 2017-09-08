@@ -20,6 +20,7 @@
 		C80CCD6E1F5F5FD7005A3E1A /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD6A1F5F5FD7005A3E1A /* HeaderView.swift */; };
 		C80CCD6F1F5F5FD7005A3E1A /* UIViewFades.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD6B1F5F5FD7005A3E1A /* UIViewFades.swift */; };
 		C80CCD731F61F384005A3E1A /* DayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD721F61F384005A3E1A /* DayTableViewCell.swift */; };
+		C80CCD751F624D22005A3E1A /* AgendaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80CCD741F624D22005A3E1A /* AgendaItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		C80CCD6A1F5F5FD7005A3E1A /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		C80CCD6B1F5F5FD7005A3E1A /* UIViewFades.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewFades.swift; sourceTree = "<group>"; };
 		C80CCD721F61F384005A3E1A /* DayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayTableViewCell.swift; sourceTree = "<group>"; };
+		C80CCD741F624D22005A3E1A /* AgendaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaItem.swift; sourceTree = "<group>"; };
 		FC215CA3F69169C478B55EA0 /* Pods-MyCalendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyCalendar.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyCalendar/Pods-MyCalendar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 				C80CCD541F5F4E1C005A3E1A /* LaunchScreen.storyboard */,
 				C80CCD571F5F4E1C005A3E1A /* Info.plist */,
 				C80CCD671F5F5C0C005A3E1A /* Style */,
+				C80CCD741F624D22005A3E1A /* AgendaItem.swift */,
 			);
 			path = MyCalendar;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				C80CCD731F61F384005A3E1A /* DayTableViewCell.swift in Sources */,
 				C80CCD6C1F5F5FD7005A3E1A /* CalViewController.swift in Sources */,
 				C80CCD6F1F5F5FD7005A3E1A /* UIViewFades.swift in Sources */,
+				C80CCD751F624D22005A3E1A /* AgendaItem.swift in Sources */,
 				C80CCD661F5F5B71005A3E1A /* Colors.swift in Sources */,
 				C80CCD4C1F5F4E1B005A3E1A /* AppDelegate.swift in Sources */,
 				C80CCD6D1F5F5FD7005A3E1A /* CustomCell.swift in Sources */,
